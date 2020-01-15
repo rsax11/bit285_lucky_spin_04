@@ -20,17 +20,18 @@ namespace LuckySpin
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app)
         {
-            app.UseMvc(routes =>
-                {
-                    routes.MapRoute("Default",
-                        "{controller=Spinner}/{action=Index}");
-                }
-            );
-
+            app.UseRouting();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                     name: "default",
+                     pattern: "{controller}/{action}/{luck:int?}",
+                     defaults: new { controller = "Spinner", action = "Index" }
+                );
+            });
             app.UseStaticFiles();
-
         }
     }
 }
