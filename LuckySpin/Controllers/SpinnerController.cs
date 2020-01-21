@@ -9,33 +9,32 @@ namespace LuckySpin.Controllers
 {
     public class SpinnerController : Controller
     {
+        Random random = new Random(); //For use in the SpinIt Action
         /***
          * Entry Page Action
          **/
-
         [HttpGet]
         public IActionResult Index()
         {
-                return View();
+                return View(); //Returns the empty Index.cshtml form
         }
-
         [HttpPost]
-        public IActionResult Index(int num)
-        {
-            return RedirectToAction("SpinIt", new { luck = 3 });
+        public IActionResult Index(int luck)
+        { //TODO: Prepare Index action to receive a Player object instead of an integer
+
+            //TODO: Pass the Player object to SpinIt using RedirectToAction("SpinIt", object)
+            return RedirectToAction("SpinIt");
         }
 
         /***
          * Spin Action
          **/  
-               
-        Random random = new Random() ; 
-
-        public IActionResult SpinIt(int luck)
+        [HttpGet]
+        public IActionResult SpinIt(int luck = 3) //TODO: Prepare this method to receive a Player
         {
             //Load up a Spin object with data
             Spin spin = new Spin();
-            spin.Luck = luck;
+            spin.Luck = luck; //TODO: Edit this to assign Player's lucky number to spin.Luck
             spin.A = random.Next(1, 10);
             spin.B = random.Next(1, 10);
             spin.C = random.Next(1, 10);
@@ -46,7 +45,7 @@ namespace LuckySpin.Controllers
             else
                 spin.Display = "none";
 
-            //Send the View a Spin
+            //Send the spin object to the View
             return View(spin);
         }
     }
