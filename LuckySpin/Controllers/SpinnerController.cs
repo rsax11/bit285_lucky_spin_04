@@ -19,22 +19,22 @@ namespace LuckySpin.Controllers
                 return View(); //Returns the empty Index.cshtml form
         }
         [HttpPost]
-        public IActionResult Index(int luck)
+        public IActionResult Index(Player player)
         { //TODO: Prepare Index action to receive a Player object instead of an integer
 
             //TODO: Pass the Player object to SpinIt using RedirectToAction("SpinIt", object)
-            return RedirectToAction("SpinIt");
+            return RedirectToAction("SpinIt", player );
         }
 
         /***
          * Spin Action
          **/  
         [HttpGet]
-        public IActionResult SpinIt(int luck = 3) //TODO: Prepare this method to receive a Player
+        public IActionResult SpinIt(Player player) //TODO: Prepare this method to receive a Player
         {
             //Load up a Spin object with data
             Spin spin = new Spin();
-            spin.Luck = luck; //TODO: Edit this to assign Player's lucky number to spin.Luck
+            spin.Luck = player.number; //TODO: Edit this to assign Player's lucky number to spin.Luck
             spin.A = random.Next(1, 10);
             spin.B = random.Next(1, 10);
             spin.C = random.Next(1, 10);
